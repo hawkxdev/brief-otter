@@ -6,6 +6,8 @@ BriefOtter is a personal monitoring tool being designed for freelancers who foll
 
 **Status:** Design stage. A runnable version is not available yet.
 
+See the [product roadmap](docs/ROADMAP.md) for the planned milestones and first vertical slice.
+
 ## Planned workflow
 
 1. Read messages from selected channels and chats.
