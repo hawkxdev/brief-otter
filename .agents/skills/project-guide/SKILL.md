@@ -8,36 +8,20 @@ allowed-tools: [Read, Grep, Glob, Bash]
 
 ## Degrees of Freedom: MEDIUM
 
-## Role
+## Role and entry
 
-Explain the monitoring concepts that future BriefOtter changes must distinguish. The README owns the introduction, AGENTS.md owns work rules and an approved feature package owns its requirements. This guide describes design concepts, not a running monitor.
+Help a contributor locate the correct BriefOtter contract and reason about its technical boundaries. Read [references/kb-index.md](references/kb-index.md) for the owner needed by the current task; exact requirements, work rules and progress stay there.
 
-## Knowledge entry
+## Technical distinctions
 
-Read [references/kb-index.md](references/kb-index.md) for the accessible project owners. Use the current task and relevant owners directly; no private notes or personal tooling are prerequisites for this guide.
+Source lookup, history reading and future update delivery are different capabilities. Evidence for one does not qualify another. Match the observation to the applicable milestone instead of inferring continuous monitoring from a successful lookup or history run.
 
-## Source access and updates
-
-A source is a selected channel or chat with an agreed access method. Resolving its name, reading a historical message and receiving its next new-message event are different observations. A successful lookup is not evidence of continuing update delivery. Do not treat inaccessible history as an empty source.
-
-Python and Telethon are the selected foundation. Source membership, update delivery and recovery behavior still need source-specific verification before collection is accepted. A user session has account authority; a read-only application boundary must be enforced by the application rather than assumed from the credential.
-
-## Selection and identity
-
-A candidate is a message worth the owner's attention, not an accepted job or a client commitment. Message intent and technical topic are separate: an advertisement offering Python services can contain the same keywords as a client requesting Python development. Job vacancies, resumes, advertisements and uncertain messages must not silently become freelance requests.
-
-The proposed processing identity combines source identity and message identity. Delivery of the same message again, an edit to that message and a cross-post in another source are different cases. A timestamp alone is insufficient to identify them. The first feature specification must choose edit, deletion and cross-post policies explicitly.
-
-## Recovery and evaluation
-
-The proposed collector separates receiving current updates from recovering an interruption. Fetching a fixed recent window does not by itself establish complete recovery. A future acceptance case should cover restart behavior, message identity, unavailable sources and visible incomplete results.
-
-Evaluate filtering with contrasting synthetic examples: a relevant client request, an executor advertisement with the same stack, a permanent role, an unclear request and a duplicate delivery. Preserve the selection reason and unknown fields rather than inventing a budget or hiding uncertainty. Output format, retention and recovery cursors remain specification decisions.
+The proposed pipeline has separate collection, classification and report-publication failure boundaries. A malformed model reply calls for inspecting the classifier contract, not expanding the Telegram scan. Complete source traversal proves neither a valid classification nor a successfully replaced report. Identify the failing stage before changing another stage's behavior.
 
 ## Upkeep
 
-Keep this guide aligned with accepted feature documents and actual behavior. Move a new detailed contract to its appropriate public owner and link it through the knowledge index. Report unresolved decisions to the maintainer instead of presenting them as implemented behavior.
+Add concrete module interactions, verified pitfalls and reproducible checks when implementation supplies evidence. Keep feature criteria, example labels, run policies and status at their indexed owners. Report unverified behavior instead of filling this guide with assumptions or copying those records.
 
 ## Harness enhancements
 
-Use available file-reading and search tools, or read the declared files directly. Report unavailable task inputs rather than assuming access to an account or private context.
+Read the indexed public files directly when native skill loading is unavailable. Report an unavailable owner; this guide requires no private notes, accounts or personal tooling.

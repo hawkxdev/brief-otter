@@ -14,13 +14,17 @@ Python and Telethon are selected. Runtime versions, dependency tooling and datab
 
 Run applicable checks locally. Do not add, enable or trigger GitHub Actions as part of routine work. For documentation edits, check links and factual claims, inspect new files as well as tracked changes, and run `git diff --check`. Define and execute focused behavior checks with the first implementation.
 
+Before a test run, obtain the maintainer's choice of tests without AI requests or the full set including real AI requests through the [feature test policy](docs/specs/001-local-candidates/tasks.md#accepted-test-execution-policy). Reuse the choice for that concrete run. Ordinary test commands must not make AI calls; explicit flags do not replace approval of the provider, request count, spending and credential scope. No interactive approval prompt belongs inside pytest itself.
+
 Use English for public documentation and technical instructions. Keep paragraphs on single lines. Preserve exact source literals when their spelling or language matters.
 
 ## Data and external actions
 
 Do not commit credentials, session material, live message archives or personal correspondence. Use synthetic examples in issues, tests and documentation. Before real collection, resolve the approved sources, account, session location, content-use terms and retention policy with the maintainer.
 
-The initial product direction excludes outgoing Telegram actions and language-model processing of collected messages. Do not log in, reuse another application's session, send messages, join sources or change production systems without the corresponding explicit assignment.
+Public material must describe BriefOtter independently of private donors. Do not identify private donor projects by names, aliases, repository addresses, local paths or provenance in documentation, source comments, fixtures, commit/PR text or artifacts. Keep source-selection metadata only with its local-private owner; a public instruction must not repeat the restricted identity as an example.
+
+Outgoing Telegram actions remain excluded. Real-model tests use agreed synthetic inputs only under their approved run scope. Collected Telegram content is not authorized for model processing until its separate content-use/access decision. Do not log in, reuse another application's session, send messages, join sources or change production systems without the corresponding explicit assignment.
 
 ## Git and delivery
 
