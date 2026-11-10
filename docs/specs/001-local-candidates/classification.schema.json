@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:brief-otter:classification:1",
+  "title": "BriefOtter classification response",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["intent", "topic", "reason"],
+  "properties": {
+    "intent": {
+      "type": "string",
+      "enum": ["project_request", "job_vacancy", "executor_ad", "resume", "editorial", "uncertain"]
+    },
+    "topic": {
+      "type": "string",
+      "enum": ["match", "no_match", "uncertain"]
+    },
+    "reason": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 240,
+      "pattern": "\\S"
+    }
+  }
+}

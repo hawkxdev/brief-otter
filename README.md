@@ -1,20 +1,26 @@
 # BriefOtter
 
-Find freelance development requests in Telegram without reading every feed yourself.
+Find development projects and job vacancies in Telegram without reading every feed yourself.
 
-BriefOtter is a personal monitoring tool being designed for freelancers who follow multiple Telegram channels and chats. The goal is a local list of relevant client requests, each with its original message link and a reason for selection.
+BriefOtter is a personal monitoring tool being designed for people who follow multiple Telegram channels and chats for development work. The goal is a local list of relevant project requests and job vacancies, shown separately with original message links and reasons for selection.
 
 **Status:** Design stage. A runnable version is not available yet.
 
 See the [product roadmap](docs/ROADMAP.md) for the planned milestones and first vertical slice.
 
+The [first feature specification](docs/specs/001-local-candidates/spec.md) proposes the detailed behavior for one-source local collection and identifies decisions still needed before implementation.
+
 ## Planned workflow
 
 1. Read messages from selected channels and chats.
-2. Distinguish client requests from service advertisements, resumes and permanent job vacancies.
-3. Apply explicit filtering rules and show relevant candidates locally, with source links and selection reasons.
+2. Identify client project requests and job vacancies as separate opportunity categories; filter out service advertisements and resumes.
+3. Apply the agreed selection criteria and show relevant candidates locally, with source links and selection reasons.
 
-Unclear messages remain marked as uncertain. The first version is intended for read-only collection and rule-based filtering, without posting to Telegram or sending message content to language models.
+Unclear messages remain marked as uncertain. The first version keeps read-only collection and local reporting. The [AI classification proposal](docs/specs/001-local-candidates/ai-classification.md) specifies a first evaluation candidate, strict response format and call limits; model acceptance and real quality remain pending. The earlier rules-only mechanism is a reference, not the proposed runtime. Outgoing Telegram actions remain excluded, and real message processing requires its separate access/content-use decisions.
+
+## Planned verification
+
+The [test execution policy](docs/specs/001-local-candidates/tasks.md#accepted-test-execution-policy) separates tests without AI requests from tests using a real model. The maintainer selects the scope before a run. Model tests use agreed synthetic examples and a separately approved request/spending limit; local tests substitute provider replies and block external calls. There are no implemented test commands yet. Passing local tests does not demonstrate model classification quality.
 
 ## Example of the intended selection
 
@@ -22,9 +28,9 @@ These synthetic examples illustrate the planned behavior, not output from a work
 
 | Message | Intended result | Reason |
 |---|---|---|
-| Need a Python developer to build a reporting bot | Candidate for review | A client is asking for project work |
+| Need a Python developer to build a reporting bot | Project candidate for review | A client is asking for project work |
 | Python developer available for Telegram bot projects | Filter out | An executor is advertising services |
-| Hiring a full-time Python developer | Classify separately | A permanent role is distinct from a freelance project |
+| Hiring a full-time Python developer | Vacancy candidate for review | An employer is hiring; show separately from projects |
 
 ## Technology
 
