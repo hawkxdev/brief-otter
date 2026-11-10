@@ -1,6 +1,6 @@
 # Local candidates: expected examples and reference rules
 
-**Decision state:** Proposed expected outcomes and a reference rules interpretation for review under D2/D5. [D5 now proposes an AI classifier](ai-classification.md); the rule patterns below remain a reference interpretation rather than the runtime algorithm. Examples are test oracles, not exact-text lookup strings, hardcoded model answers or measured accuracy. [spec.md](spec.md) owns LC-02 through LC-04 and the accepted profile; its original EX-01 through EX-15 remain applicable. The [test policy](tasks.md#accepted-test-execution-policy) separates local handling from approved real-model checks.
+**Decision state:** Individual expected labels and the reference rules interpretation remain proposed for review. The [accepted D5 technical basis](../../adr/0001-local-collection-technical-basis.md) selects semantic AI classification; these rule patterns are a reference, not the runtime algorithm. Examples are semantic test oracles, not exact-text lookup strings, hardcoded model answers or measured accuracy. [spec.md](spec.md) owns LC-02 through LC-04 and the accepted profile. [tasks.md](tasks.md#accepted-test-execution-policy) owns the separate local/real-model run policy.
 
 ## Decision dimensions
 
