@@ -16,7 +16,7 @@ The [first feature specification](docs/specs/001-local-candidates/spec.md) propo
 2. Identify client project requests and job vacancies as separate opportunity categories; filter out service advertisements and resumes.
 3. Apply the agreed selection criteria and show relevant candidates locally, with source links and selection reasons.
 
-Unclear messages remain marked as uncertain. The first version keeps read-only collection and local reporting. The [AI classification proposal](docs/specs/001-local-candidates/ai-classification.md) specifies a first evaluation candidate, strict response format and call limits; model acceptance and real quality remain pending. The earlier rules-only mechanism is a reference, not the proposed runtime. Outgoing Telegram actions remain excluded, and real message processing requires its separate access/content-use decisions.
+Unclear messages remain marked as uncertain. The first version keeps read-only collection and local reporting. The [accepted D5 technical basis](docs/adr/0001-local-collection-technical-basis.md) selects semantic AI classification and `glm-5.3-flash` as the first evaluation candidate; actual quality and operational access remain unverified. The [AI contract](docs/specs/001-local-candidates/ai-classification.md) specifies its response shape and limits. Outgoing Telegram actions remain excluded, and real message processing requires separate access/content-use approval.
 
 ## Planned verification
 

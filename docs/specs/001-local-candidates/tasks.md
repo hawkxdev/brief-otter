@@ -2,17 +2,17 @@
 
 ## Feature state
 
-**Scope:** [Single-source Local Collection](spec.md), accepted first-run settings, storage and test policy within the proposed Milestone 1 contract. The complete [AI classification proposal](ai-classification.md) is ready for review; no model route is accepted or implemented yet.
+**Scope:** [Single-source Local Collection](spec.md), with accepted first-run settings, storage, test policy and the [accepted D5 technical basis](../../adr/0001-local-collection-technical-basis.md). The detailed requirement table and individual expected labels retain their review state; the selected model candidate is not implemented or qualified.
 
 **Phase:** `preparing`.
 
-**Evidence:** The maintainer approves the first-run proposal in D1/D2 and the D3 policy of one latest local HTML report with short excerpts and links, replaced by the next run or removed manually, without a separate full-message archive. The maintainer assigns D5 and Russian-example preparation. The resulting [technical proposal](plan.md) and [rules/examples](rules.md) are prepared for review, including requirement mapping and bounded design probes. The preceding public baseline is `f51ab4c21a4c0e4f4b5ee87adcf8612325494699`. No product implementation or collector runtime verification has started.
+**Evidence:** The maintainer accepts D1/D2, D3 storage, the test policy and D5 as the six-point technical basis against published design baseline `3ac5013bbff5009440ea711b9ec8a12e957571d5`. [The ADR](../../adr/0001-local-collection-technical-basis.md) records the decision and its limits. The plan, AI contract and prompt/schema remain the design owners. No product implementation or collector runtime verification has started.
 
-**Dependencies:** [Decisions D1 through D5](spec.md#decisions-and-open-questions) distinguish accepted settings from open details. The maintainer must accept or amend the prepared plan/rules and the remaining detailed contract before implementation is assigned. The plan explicitly proposes public-channel-only access and POSIX operation for the first implementation; these limits require review rather than implicit scope narrowing. D3 permitted content use and D4 account/API/session/source authorization remain prerequisites for live work. Target-runtime compatibility is not executed. The missing account does not block offline preparation or later separately assigned synthetic implementation.
+**Dependencies:** D5 now selects one public broadcast channel, macOS/Linux, semantic AI classification, the ordinary Z.ai candidate and one replaceable HTML report. Individual EX/RU labels and the remaining detailed requirement criteria need review before their dependent evaluation/implementation. Target-runtime compatibility and the selected route's current access/quality remain unverified. D3 permitted content use and D4 account/API/session/source authorization constrain live work, while offline preparation can continue.
 
-**Next action:** Review D5's preferred candidate, three-field response, prompt, limits and expected labels. Accept or amend that baseline before assigning implementation. The first model evaluation remains proposed at 45 physical calls/0.50 USD, with no launch authority. The testing architecture/reuse strategy are accepted; model access/quality and D3/D4 prerequisites remain unverified.
+**Next action:** Prepare the bounded Stage 1 implementation assignment from the accepted D5 basis and resolve the detailed criteria needed by that stage. Implementation is not assigned by design acceptance. The planned 45-case/0.50 USD model evaluation requires its reviewed manifest and separate run, spending and credential approval.
 
-**Delivery:** Local documentation only. No issue or PR is created for this package. Commit and publication require approval of the prepared result; final merge remains with the human maintainer.
+**Delivery:** The preceding design proposal is delivered through [PR 2](https://github.com/hawkxdev/brief-otter/pull/2) in `3ac5013bbff5009440ea711b9ec8a12e957571d5`. This documentation update records subsequent D5 acceptance and reconciles its decision states. A runnable collector, operational qualification and model evaluation remain undelivered. Future commits/publication and final merges retain their respective maintainer gates.
 
 ## Accepted test execution policy
 

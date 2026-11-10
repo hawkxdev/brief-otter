@@ -1,18 +1,18 @@
-# D5: AI classification proposal
+# D5: AI classification design
 
-**Decision state:** Complete proposal for maintainer review, not an accepted model assignment or authorization to install dependencies, implement, read credentials or make requests. The maintainer assigns preparation of the model, response contract, failure handling and call limits. [spec.md](spec.md) owns requirements; [tasks.md](tasks.md) owns feature state and the accepted run-confirmation policy. [plan.md](plan.md) links collection/report integration to this document.
+**Decision state:** Accepted as the D5 technical basis, with `glm-5.3-flash` selected as the first evaluation candidate under [the ADR](../../adr/0001-local-collection-technical-basis.md). This is a model/design choice, not verified operational access or measured quality. No dependency installation, implementation, credential access or real request is assigned. [spec.md](spec.md) owns detailed requirements; [tasks.md](tasks.md) owns feature state and run approval; [plan.md](plan.md) owns integration.
 
-## Proposed choice and evidence
+## Selected candidate and evidence
 
-Use an AI classifier as the proposed first implementation, with deterministic application code handling identity, disposition, budgets and HTML. The preferred initial evaluation candidate is `glm-5.3-flash` through Z.ai's ordinary metered API at `https://api.z.ai/api/paas/v4/chat/completions`. Coding Plan is a different product and is not a substitute. Account eligibility, balance, a BriefOtter credential and this exact operation remain unverified; no credential value is read during preparation.
+Use a per-message semantic AI classifier under the accepted D5 basis, with application code handling identity, disposition, budgets and HTML. The selected initial evaluation candidate is `glm-5.3-flash` through Z.ai's ordinary metered API at `https://api.z.ai/api/paas/v4/chat/completions`, with enabled thinking and `low` effort. Coding Plan is a different product and is not a substitute. Account eligibility, balance, a BriefOtter credential and this exact operation remain unverified; design acceptance reads no credential value.
 
 | Candidate | Evidence and fit | Disposition |
 |---|---|---|
-| Z.ai `glm-5.3-flash` | The official model page documents JSON output and a 1M context. The ordinary API and existing integration knowledge support a small stateless JSON client. Thinking is mandatory; use its supported `low` effort rather than an unsupported off setting. | Preferred candidate for the first bounded evaluation, not a quality winner. |
+| Z.ai `glm-5.3-flash` | The official model page documents JSON output and a 1M context. The ordinary API and existing integration knowledge support a small stateless JSON client. Thinking is mandatory; use supported `low` effort. | Selected by the maintainer as the first evaluation candidate; quality and operational access are unverified. |
 | Z.ai GLM-4.7-Flash family | The official price list lists a free API tier and the family documents JSON output. The exact serving ID/access needs verification before an optional run; free price does not establish equivalent Russian quality. | Secondary candidate only for another separately scoped evaluation; no automatic fallback. |
 | Z.ai `glm-5.3` | The published token rates are higher; its coding/agent positioning does not establish better results for this short taxonomy. | No initial need to spend more without relevant evidence. |
 
-The choice is an engineering starting hypothesis, not a measured ranking. No A/B, quality, latency or current access result is claimed. A future change of model, effort, prompt or provider needs a new identified evaluation; it is not a transparent fallback. Keep the prompt short rather than importing another application's pricing, eligibility or long-form analysis policy.
+The selected candidate is an engineering starting hypothesis, not a measured ranking. No A/B, quality, latency or current-access result is claimed. A future change of model, effort, prompt or provider needs an identified evaluation; there is no transparent fallback. Keep the prompt scoped to this taxonomy.
 
 Sources inspected on 2026-11-10: [model and supported thinking](https://docs.z.ai/guides/vlm/glm-5.3-flash), [ordinary Chat Completion API](https://docs.z.ai/api-reference/llm/chat-completion), [reasoning parameters](https://docs.z.ai/guides/overview/concept-param), [JSON output](https://docs.z.ai/guides/capabilities/struct-output), [pricing](https://docs.z.ai/guides/overview/pricing), [Coding Plan scope](https://docs.z.ai/devpack/faq) and [API data-processing terms](https://docs.z.ai/legal-agreement/privacy-policy#data-processing-addendum-for-api-services). The API documentation identifies the ordinary endpoint; a model page showing a coding endpoint does not change this billing product. The provider's API privacy statement is not independently verified account-specific retention evidence or permission to process Telegram content. D3/D4 still govern real data.
 
@@ -72,7 +72,7 @@ Track collection coverage and classification coverage separately. A complete his
 
 ## Run budgets and spending admission
 
-All values below are proposals awaiting the maintainer's concrete run approval. They authorize no request now. A published token-cost estimate is not an invoice, account balance or subscription entitlement.
+The values below are planning limits under D5, awaiting the maintainer's concrete run approval. They authorize no request now. A published token-cost estimate is not an invoice, account balance or subscription entitlement.
 
 | Run | Physical request cap | Token-cost admission cap | Phase time |
 |---|---|---|---|
@@ -97,4 +97,4 @@ Stage 1 establishes version/import compatibility, the response model and the no-
 
 ## Remaining decisions
 
-The D5 design proposal is ready for review. Acceptance must name this candidate/contract or amend it; account access and spending are separate decisions. A BriefOtter-scoped ordinary-API credential, account/product eligibility and current operation access remain unverified. Real model calls need the accepted example labels, exact run packet and spending/credential approval. Collected Telegram content additionally requires D3/D4 resolution. No dependency install, paid call, source collection, commit or publication follows from this proposal alone.
+The D5 technical basis and first evaluation candidate are accepted. Individual example labels and remaining detailed criteria still need review for their dependent work. A BriefOtter-scoped ordinary-API credential, account/product eligibility and current operation access remain unverified. Real calls require the reviewed manifest and exact spending/credential/run approval. Collected Telegram content additionally requires D3/D4. No implementation, paid call, collection, commit or publication follows from design acceptance alone.

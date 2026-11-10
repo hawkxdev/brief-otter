@@ -6,7 +6,7 @@ BriefOtter aims to turn selected Telegram feeds into a useful local list of deve
 
 The project is at the design stage. The public foundation is available, but there is no runnable collector. Python and Telethon are selected; runtime versions, dependency tooling, storage technology and detailed architecture remain decisions for the first feature package.
 
-The product direction and first vertical slice below are agreed, including the usefulness of both projects and vacancies. The complete [AI classification proposal](specs/001-local-candidates/ai-classification.md) supplies D5's candidate route, response contract and call limits. Separate test groups and maintainer run selection are accepted; the model/design proposal and implementation milestones await their own acceptance. The first feature specification remains a proposal; feature packages own their detailed requirements, criteria and plans.
+The product direction and first vertical slice below are agreed, including both projects and vacancies. [D5 is accepted as the technical basis](adr/0001-local-collection-technical-basis.md), with its first AI evaluation candidate and local-report approach. Detailed requirement rows and individual expected labels retain their review state. Implementation and real-run permissions remain separate; feature packages own their criteria and plans.
 
 ## Milestones
 
@@ -29,7 +29,7 @@ The end-to-end scenario is:
 
 1. The user starts a local collection command. Its exact interface belongs to the feature package.
 2. The collector reads an agreed range of messages from one selected channel.
-3. The agreed classifier identifies client project requests and job vacancies as separate opportunity categories, distinguishes executor advertisements and resumes, and preserves uncertain messages. The final mechanism is selected through feature 001 rather than assumed from the earlier rules-only proposal.
+3. The agreed classifier identifies client project requests and job vacancies as separate opportunity categories, distinguishes executor advertisements and resumes, and preserves uncertain messages. The accepted D5 basis selects semantic AI classification, with implementation and actual model qualification still pending.
 4. A topic filter selects candidates within the agreed interests.
 5. A local HTML table presents project requests and vacancies separately, with source, publication time, category, selection reason and original message link. Uncertain messages have their own section.
 6. Processing the same message again does not create another copy. An inaccessible source or incomplete collection is reported visibly.
@@ -50,7 +50,7 @@ Starting directly with a continuous monitor would provide automatic collection e
 
 ## Constraints and open decisions
 
-The initial direction keeps read-only collection, separate categories and local reporting. AI classification is the proposed runtime mechanism and is to be assessed through its separately gated model tests; they have not run. The older rule patterns are a reference only. Outgoing Telegram actions remain excluded. Processing real Telegram content through a model requires a separate content-use/access decision; synthetic tests do not grant it. Credentials, session material and live archives remain outside the public repository.
+The initial direction keeps read-only collection, separate categories and local reporting. Semantic AI classification is the accepted technical approach; the selected candidate has not been evaluated. Outgoing Telegram actions remain excluded. Processing real Telegram content through a model requires a separate content-use/access decision. Credentials, session material and live archives remain outside the public repository.
 
 Before live collection, resolve the first source and its access method, the account and protected session location, the initial reading range, permitted content use, retained data and retention policy. Before implementing the feature, agree its selection examples, detailed behavior and acceptance criteria. The first feature package must also state its edit, deletion and cross-post policies, including explicit exclusions.
 

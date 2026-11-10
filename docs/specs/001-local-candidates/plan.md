@@ -1,14 +1,14 @@
-# Local candidates: technical proposal
+# Local candidates: technical plan
 
-**Decision state:** Complete D5 proposal for review, including the [AI classifier contract](ai-classification.md). The maintainer accepts the test execution policy and scoped reuse of an existing isolation mechanism. The preferred model is an evaluation candidate, not an accepted route or measured winner. No implementation, provider call or live Telegram access is authorized here.
+**Decision state:** Accepted as the D5 technical basis at design baseline `3ac5013bbff5009440ea711b9ec8a12e957571d5`; [the ADR](../../adr/0001-local-collection-technical-basis.md) records its scope. The first evaluation candidate is ordinary-API `glm-5.3-flash` with enabled/low thinking. Detailed runtime qualification, individual evaluation labels, implementation assignment and real-run authority remain separate.
 
-**Requirements:** [spec.md](spec.md), LC-01 through LC-10 and decisions D1 through D5. [tasks.md](tasks.md) alone owns feature progress and the [accepted test execution policy](tasks.md#accepted-test-execution-policy). [rules.md](rules.md) owns expected synthetic labels and a reference rule interpretation. [ai-classification.md](ai-classification.md) owns the proposed model, protocol, failure handling and spending admission; its prompt/schema are linked there. No application or test command described below exists yet.
+**Requirements:** [spec.md](spec.md), LC-01 through LC-10 and decisions D1 through D5. [tasks.md](tasks.md) alone owns feature progress and the [accepted test execution policy](tasks.md#accepted-test-execution-policy). [rules.md](rules.md) owns expected synthetic labels and a reference rule interpretation. [ai-classification.md](ai-classification.md) owns the selected initial model candidate, protocol, failure handling and spending admission; its prompt/schema are linked there. No application or test command described below exists yet.
 
 ## Outcome and boundaries
 
-One manual run reads the accessible history of one configured channel for the accepted seven-day interval and replaces one private local HTML report. Projects, vacancies and uncertain items remain separate. The report explains coverage, selection reasons and failures. The proposed implementation uses AI classification with ordinary code computing disposition. No database, persistent history cursor, message archive, background listener or delivery bot is introduced. The earlier rules-only mechanism remains a reference. Collection/rendering stay independent of the model adapter, and real-model evaluation uses separately approved synthetic inputs. A latest cost/attempt-state diagnostic contains no message bodies and serves only spending recovery.
+One manual run reads the accessible history of one configured channel for the accepted seven-day interval and replaces one private local HTML report. Projects, vacancies and uncertain items remain separate. The report explains coverage, selection reasons and failures. The accepted technical basis uses AI classification with ordinary code computing disposition. No database, persistent history cursor, message archive, background listener or delivery bot is introduced. The earlier rules-only mechanism remains a reference. Collection/rendering stay independent of the model adapter, and real-model evaluation uses separately approved synthetic inputs. A latest cost/attempt-state diagnostic contains no message bodies and serves only spending recovery.
 
-The selected pilot is public. The proposed initial adapter accepts one public channel username and validates that it resolves to a broadcast channel, rather than a user, group, invite link or a list. Private-channel support is not claimed by this proposal. This explicit access restriction needs review with the detailed contract; the real pilot identity stays outside public documents and fixtures.
+The initial adapter is limited to one public broadcast channel on macOS/Linux under the accepted D5 basis. It accepts a public channel username and validates the peer kind, rather than accepting a user, group, invite link or source list. Private-channel and Windows support are outside this first implementation. The real pilot identity stays outside public documents and fixtures.
 
 ## Architectural choices
 
@@ -17,10 +17,10 @@ The selected pilot is public. The proposed initial adapter accepts one public ch
 | Runtime and dependencies | Proposed baseline: CPython 3.14.10, Telethon 1.45.0, HTTPX 0.28.1, Pydantic 2.14.3, uv, `pyproject.toml`, `.python-version` and `uv.lock`. Collection/report code otherwise uses the standard library. No model SDK or agent framework is needed. | Dependency/version compatibility is not executed; Stage 1 establishes it before product work depends on it. |
 | Execution and data | One asyncio lifecycle, sequential history requests, an in-memory run model and one replaceable HTML report. | SQLite and recovery cursors serve repeated monitoring, outside this slice. A Telethon authorization carrier is separate from message storage. |
 | Source adapter | Use Telethon's raw `messages.GetHistoryRequest` through a narrow page interface. Keep page progress and termination decisions in the collector. | `iter_messages()` is convenient, but its inspected early-stop paths hide distinctions required by LC-08. Do not copy Telethon internals or implement another MTProto transport. |
-| Selection | Proposed one-message AI classifier, with `glm-5.3-flash` on ordinary Z.ai API as the first evaluation candidate. Validate the three-field response locally, then compute disposition from the rubric. | Candidate quality and current access are unverified. No automatic provider/model fallback or implementation of the older rules-only algorithm. |
+| Selection | Per-message AI classifier, with `glm-5.3-flash` on ordinary Z.ai API as the first evaluation candidate. Validate the three-field response locally, then compute disposition from the rubric. | Candidate quality and current access are unverified. No automatic provider/model fallback or implementation of the older rules-only algorithm. |
 | Report publication | Reserve the output with an exclusive local lock, replace the old report with an unfinished-run marker before networking, then atomically replace it with the terminal report. | Keeping an old successful report silently after a new failure violates LC-08. An archive or timestamped history violates D3. |
 
-These are proposed decisions, not ADRs recording accepted architecture. Only this plan owns the technical choices; it links requirements instead of replacing them.
+The accepted architectural basis is recorded in [the ADR](../../adr/0001-local-collection-technical-basis.md). This plan owns its detailed integration choices and staged implementation checks; the ADR does not duplicate those contracts or claim runtime verification.
 
 ## Proposed command and configuration
 
@@ -48,7 +48,7 @@ Source configuration and report paths must be checked after resolving parent sym
 | `collection.request_timeout_seconds` | 15 | Bound each awaited access/history operation by this value and the remaining global deadline. |
 | `report.excerpt_characters` | 400 | Unicode code points retained from each displayed message; include a visible truncation marker when needed. |
 
-These are proposed collection budgets, not Telegram quotas, model-call budgets or account-safety guarantees. Validate positive finite values, integer counts, page size no greater than 100 and sensible relationships before connecting. The interval remains the accepted seven days; a cap never silently shortens the requested interval or becomes successful completion. Classification uses available text before report excerpt truncation. Provider deadlines, retries and spending limits must be designed separately before a real-model run.
+These are proposed collection budgets, not Telegram quotas, model-call budgets or account-safety guarantees. Validate positive finite values, integer counts, page size no greater than 100 and sensible relationships before connecting. The interval remains the accepted seven days; a cap never silently shortens the requested interval or becomes successful completion. Classification uses available text before report excerpt truncation. The AI contract defines provider deadlines, retries and spending admission; the concrete real-model run needs its own approval.
 
 ## History and completeness
 
@@ -119,7 +119,7 @@ Execution and phase remain at [tasks.md](tasks.md). Each stage below describes f
 <!-- === Stage 1: Reproducible offline boundary === -->
 ### Stage 1: Reproducible offline boundary
 
-Dependencies: approval of the revised classifier/requirement/plan baseline and a separate implementation assignment. Local work needs no Telegram account. A real-model evaluation requires its own approved route and bounded run.
+Dependencies: the accepted D5 technical basis, applicable detailed Stage 1 criteria and a separate implementation assignment. Local work needs no Telegram account. A real-model evaluation requires its own approved route and bounded run.
 
 1. Establish the proposed interpreter, package entry point, complete lock and local quality-tool configuration; prove import/startup compatibility on the target version.
 2. Define domain outcomes, identities and nonoverlapping counting fields.
@@ -190,6 +190,6 @@ Primary contracts: [messages.getHistory](https://core.telegram.org/method/messag
 
 ## Readiness and review boundary
 
-The D5 proposal now specifies the candidate model, prompt/schema, failure handling and call/spend limits at ai-classification.md. Those choices await review; account/operation access, dependency compatibility and real quality are unverified. Implementation requires acceptance of the baseline and an assignment. Model tests require an approved concrete run; Telegram/model-content work additionally requires D3/D4. No provider spend, deployment or external commitment is approved here.
+The D5 technical basis is accepted. The AI contract specifies its chosen first evaluation candidate, prompt/schema, failure handling and planned limits. Account/operation access, dependency compatibility and real quality remain unverified. Individual evaluation labels and detailed criteria retain their review requirements. Implementation needs its assignment; model tests need a concrete approved run, and Telegram/model-content work additionally needs D3/D4.
 
-The author checks document coherence and requirement mapping, not an unimplemented classifier. This is self-check, not independent review or maintainer acceptance. Next, review the complete D5 candidate and expected labels before assigning implementation. Commit and publication require approval of the exact outgoing package.
+Document coherence and requirement mapping are author checks, not runtime evidence or independent review. Next, prepare the bounded implementation assignment and its applicable acceptance criteria. Commit and publication require approval of the exact changed package.
