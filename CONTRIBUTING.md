@@ -1,6 +1,6 @@
 # Contributing to BriefOtter
 
-BriefOtter is at the design stage. Start with the [README](README.md) and the [project guide](.agents/skills/project-guide/SKILL.md). Use an issue to discuss a use case, clarify expected behavior or propose a focused change before substantial implementation.
+BriefOtter has an offline foundation; collection, model evaluation and reporting remain future work. Start with the [README](README.md) and the [project guide](.agents/skills/project-guide/SKILL.md). Use an issue to discuss a use case, clarify expected behavior or propose a focused change before substantial implementation.
 
 ## Useful reports
 
@@ -8,9 +8,9 @@ Explain the problem, the expected outcome and how the proposed change would help
 
 ## Local checks
 
-There are no application dependencies or runtime commands yet. For documentation changes, verify relative links, check that behavior is labelled as intended or implemented accurately, and run `git diff --check` from the repository root. Inspect newly added files too: the default diff does not include untracked files.
+Follow README's locked setup for the offline foundation, then run `scripts/check.sh` for static/build/package qualification. Select the concrete test mode with the maintainer before adding `--tests` or invoking pytest. Current synthetic tests make no real-provider requests; `--run-ai` is an explicit unavailable preflight. For documentation changes, verify relative links, label intended versus implemented behavior accurately and run `git diff --check`. Inspect new files too: the default diff does not include untracked files.
 
-Implementation proposals should identify the required local setup and focused checks. Do not assume access to a maintainer's Telegram account, private sources or paid services. Agree any live-data verification separately and use synthetic fixtures for ordinary automated checks.
+Implementation proposals should identify focused behavior checks and preserve the default-on test boundary during imports, collection and child processes. Private configuration/session carriers and provider access are not contributor prerequisites for the offline foundation. Agree live-data verification separately. Source archives must retain required public source/tests/docs while excluding private context and generated runtime data; inspect actual wheel and sdist members independently.
 
 ## Pull requests
 

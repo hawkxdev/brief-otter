@@ -16,7 +16,13 @@ Help a contributor locate the correct BriefOtter contract and reason about its t
 
 Source lookup, history reading and future update delivery are different capabilities. Evidence for one does not qualify another. Match the observation to the applicable milestone instead of inferring continuous monitoring from a successful lookup or history run.
 
-The proposed pipeline has separate collection, classification and report-publication failure boundaries. A malformed model reply calls for inspecting the classifier contract, not expanding the Telegram scan. Complete source traversal proves neither a valid classification nor a successfully replaced report. Identify the failing stage before changing another stage's behavior.
+The designed pipeline has separate collection, classification and report-publication failure boundaries. A malformed model reply calls for inspecting the classifier contract, not expanding the Telegram scan. Complete source traversal proves neither a valid classification nor a successfully replaced report. Identify the failing stage before changing another stage's behavior.
+
+## Implemented boundary mechanics
+
+The CLI parses help before resolving a project boundary or loading settings. Configuration validation checks canonical private destinations without creating a client or replacing output. A local preflight failure therefore does not establish an account or provider failure. Response parsing rejects duplicate JSON keys before typed field validation; once a parser has discarded duplicate keys, ordinary dictionary validation cannot recover that evidence.
+
+The test boundary starts before collection and is reinstalled for admitted Python children through sitecustomize. A function-scoped fixture alone misses module imports and child startup. Process arguments are bound to the real Popen signature before executable, shell and environment checks, so positional arguments follow the same policy as keywords. Child modes that suppress the bootstrap are rejected, while Unix socket-pair controls keep local asyncio operation usable.
 
 ## Upkeep
 

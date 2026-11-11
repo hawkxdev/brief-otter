@@ -4,7 +4,7 @@ BriefOtter aims to turn selected Telegram feeds into a useful local list of deve
 
 ## Current state
 
-The project is at the design stage. The public foundation is available, but there is no runnable collector. Python and Telethon are selected; runtime versions, dependency tooling, storage technology and detailed architecture remain decisions for the first feature package.
+The offline foundation implements package setup, command/configuration preflight, local response validation and synthetic test isolation. Versions are pinned in the project manifests; README owns setup/check commands. A runnable collector, model evaluation and HTML reporting are not available, and Milestone 1 is not accepted by this foundation result.
 
 The product direction and first vertical slice below are agreed, including both projects and vacancies. [D5 is accepted as the technical basis](adr/0001-local-collection-technical-basis.md), with its first AI evaluation candidate and local-report approach. Detailed requirement rows and individual expected labels retain their review state. Implementation and real-run permissions remain separate; feature packages own their criteria and plans.
 

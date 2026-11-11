@@ -1,8 +1,8 @@
 # Local candidates: technical plan
 
-**Decision state:** Accepted as the D5 technical basis at design baseline `3ac5013bbff5009440ea711b9ec8a12e957571d5`; [the ADR](../../adr/0001-local-collection-technical-basis.md) records its scope. The first evaluation candidate is ordinary-API `glm-5.3-flash` with enabled/low thinking. Detailed runtime qualification, individual evaluation labels, implementation assignment and real-run authority remain separate.
+**Decision state:** D5 is accepted as the technical basis under [the ADR](../../adr/0001-local-collection-technical-basis.md). The maintainer assigns the bounded Stage 1 offline foundation and selects no-AI verification. The first real-model evaluation candidate remains ordinary-API `glm-5.3-flash` with enabled/low thinking; its access, quality, individual labels and concrete run approval remain separate.
 
-**Requirements:** [spec.md](spec.md), LC-01 through LC-10 and decisions D1 through D5. [tasks.md](tasks.md) alone owns feature progress and the [accepted test execution policy](tasks.md#accepted-test-execution-policy). [rules.md](rules.md) owns expected synthetic labels and a reference rule interpretation. [ai-classification.md](ai-classification.md) owns the selected initial model candidate, protocol, failure handling and spending admission; its prompt/schema are linked there. No application or test command described below exists yet.
+**Requirements:** [spec.md](spec.md), LC-01 through LC-10 and decisions D1 through D5. [tasks.md](tasks.md) alone owns feature progress and the [accepted test execution policy](tasks.md#accepted-test-execution-policy). [rules.md](rules.md) owns expected synthetic labels and a reference rule interpretation. [ai-classification.md](ai-classification.md) owns the selected initial model candidate, protocol, failure handling and spending admission; its prompt/schema are linked there. [README](../../../README.md) identifies the implemented offline commands; collection and real-model commands below retain their later-stage boundaries.
 
 ## Outcome and boundaries
 
@@ -14,7 +14,7 @@ The initial adapter is limited to one public broadcast channel on macOS/Linux un
 
 | Choice | Proposal and reason | Alternative and limit |
 |---|---|---|
-| Runtime and dependencies | Proposed baseline: CPython 3.14.10, Telethon 1.45.0, HTTPX 0.28.1, Pydantic 2.14.3, uv, `pyproject.toml`, `.python-version` and `uv.lock`. Collection/report code otherwise uses the standard library. No model SDK or agent framework is needed. | Dependency/version compatibility is not executed; Stage 1 establishes it before product work depends on it. |
+| Runtime and dependencies | Pinned baseline: CPython 3.14.10, Telethon 1.45.0, HTTPX 0.28.1, Pydantic 2.14.3, uv, `pyproject.toml`, `.python-version` and `uv.lock`. Planned collection/report code otherwise uses the standard library. No model SDK or agent framework is needed. | Stage 1 qualifies imports, CLI preflight and package builds on macOS. Linux, collection and provider compatibility remain unexecuted. |
 | Execution and data | One asyncio lifecycle, sequential history requests, an in-memory run model and one replaceable HTML report. | SQLite and recovery cursors serve repeated monitoring, outside this slice. A Telethon authorization carrier is separate from message storage. |
 | Source adapter | Use Telethon's raw `messages.GetHistoryRequest` through a narrow page interface. Keep page progress and termination decisions in the collector. | `iter_messages()` is convenient, but its inspected early-stop paths hide distinctions required by LC-08. Do not copy Telethon internals or implement another MTProto transport. |
 | Selection | Per-message AI classifier, with `glm-5.3-flash` on ordinary Z.ai API as the first evaluation candidate. Validate the three-field response locally, then compute disposition from the rubric. | Candidate quality and current access are unverified. No automatic provider/model fallback or implementation of the older rules-only algorithm. |
@@ -94,15 +94,15 @@ Escape message text, captions, source labels and reasons as plain text. Construc
 | `src/brief_otter/report.py` | Safe rendering, output lock and atomic replacement |
 | `src/brief_otter/telegram.py`, `collect.py` | Narrow source adapter and bounded traversal |
 | `tests/`, `tests/conftest.py` | Synthetic fixtures, local checks, marked AI cases and test isolation; no real source identity |
-| `scripts/check.sh` | Future local verification entry, using the selected project standards; no Actions |
+| `scripts/check.sh` | Implemented local static/build/distribution checks with explicit test mode; no Actions |
 
-These paths are proposed, not files already created. Introduce no web framework, ORM, template engine, bot library or background service. Development dependencies and exact quality-tool pins are resolved in Stage 1 under the project's quality standards. Prompt/schema source stays in this feature package; future packaging derives runtime resources from it and verifies hashes rather than creating a competing editable prompt.
+Stage 1 implements the manifests, CLI/configuration, domain/local response validation, synthetic tests and quality scripts. Selection orchestration, provider transport, report rendering and Telegram traversal remain future work. Introduce no web framework, ORM, template engine, bot library or background service. Development dependencies and exact quality-tool pins are resolved in Stage 1 under the project's quality standards. Prompt/schema source stays in this feature package; future packaging derives runtime resources from it and verifies hashes rather than creating a competing editable prompt.
 
 ## Test groups and execution mechanism
 
 The normative run/approval rule is owned once at [tasks.md](tasks.md#accepted-test-execution-policy). Groups are classified by actual AI requests, not duration or whether the input mentions AI. A fake model reply belongs to the no-AI group. Real-model cases exercise the actual classifier/prompt and check agreed intent/topic labels and response structure; free-form explanations are not exact-string oracles.
 
-The selected technical pattern is a registered `ai` pytest marker and opt-in `--run-ai` flag. Proposed ordinary command: `uv run --locked pytest tests/`. Proposed full command: `uv run --locked pytest tests/ --run-ai`. Ordinary mode visibly skips AI cases and blocks external requests. Full mode keeps ordinary tests isolated while admitting only the selected AI cases and approved provider scope. A missing route, credential or approved limit in requested AI mode is an explicit unmet preflight, not a green full run with silently skipped model checks. These commands are not implemented or executed.
+The selected technical pattern is a registered `ai` pytest marker and opt-in `--run-ai` flag. Proposed ordinary command: `uv run --locked pytest tests/`. Proposed full command: `uv run --locked pytest tests/ --run-ai`. Ordinary mode visibly skips AI cases and blocks external requests. Full mode keeps ordinary tests isolated while admitting only the selected AI cases and approved provider scope. A missing route, credential or approved limit in requested AI mode is an explicit unmet preflight, not a green full run with silently skipped model checks. The ordinary command is implemented for synthetic local checks. `--run-ai` is registered but currently fails explicitly before collection because real-model admission and semantic cases belong to Stage 2; no provider evaluation has run.
 
 Ask the maintainer in conversation before invoking pytest; do not put `input()` or another interactive approval inside the runner. The flag enforces the chosen mode but supplies no authorization. Keep imports and collection network-free even with the flag. Read real credentials only in the explicitly admitted model fixture from the approved carrier; never load another application's environment or log values. Bound physical calls, including retries, before a real run.
 
@@ -114,29 +114,66 @@ The mechanism follows [pytest option-based selection](https://docs.pytest.org/en
 
 ## Stages
 
-Execution and phase remain at [tasks.md](tasks.md). Each stage below describes future work and its exit evidence, not a checked implementation checklist.
+Execution and feature phase remain at [tasks.md](tasks.md). The stage scopes and exit criteria below distinguish the implemented offline foundation from later work; they are not evidence of complete Milestone 1 acceptance.
 
 <!-- === Stage 1: Reproducible offline boundary === -->
 ### Stage 1: Reproducible offline boundary
 
-Dependencies: the accepted D5 technical basis, applicable detailed Stage 1 criteria and a separate implementation assignment. Local work needs no Telegram account. A real-model evaluation requires its own approved route and bounded run.
+Dependencies: the accepted D5 technical basis and the assigned S1-01 through S1-09 offline scope. The maintainer selects tests without AI requests for this implementation. No Telegram account or provider credential is needed; real-model evaluation keeps its separate bounded-run approval.
 
-1. Establish the proposed interpreter, package entry point, complete lock and local quality-tool configuration; prove import/startup compatibility on the target version.
-2. Define domain outcomes, identities and nonoverlapping counting fields.
-3. Implement configuration validation and command preflight; reject invalid secrets/paths without reading or printing credential values in tests.
-4. Verify help, invalid input, boundary/permission checks and offline execution; document actual setup/check commands.
+#### Implementation scope
 
-Exit: reproducible local setup, no implicit login/network on preflight, and focused checks for LC-01/LC-09/LC-10. No collector behavior is accepted here.
+The maintainer assigns this bounded contract for local implementation. Keep this section as the scope/criteria owner; tasks.md links it rather than repeating the checklist. Stage 1 code and synthetic verification do not assign later collection, provider or report work.
+
+The result is an installable local Python package whose command can explain its usage, reject invalid configuration and stop explicitly before unimplemented collection, with local tests unable to contact an external service. Use the runtime/dependency baseline in Architectural choices; dependency setup is implemented with a project-local interpreter/tool environment and a complete lock. Keep development/build tool versions pinned in the manifests. An incompatibility must be reported with its exact package/version evidence before changing the selected runtime or silently falling back.
+
+| Planned paths | Stage 1 responsibility |
+|---|---|
+| `pyproject.toml`, `.python-version`, `uv.lock` | One reproducible project, declared build backend, entry point and locked runtime/development dependencies |
+| `src/brief_otter/__init__.py`, `__main__.py`, `cli.py` | Import-safe package and command lifecycle; no source or model client construction |
+| `src/brief_otter/config.py` | Pure validation of explicit settings and fail-fast command preflight, with injected synthetic settings in tests |
+| `src/brief_otter/domain.py`, `classification.py` | Used identity/outcome/count types and strict local three-field response validation; no semantic classification or provider adapter |
+| `tests/conftest.py`, focused tests | Early credential/network isolation, option/marker registration and distinguishing offline checks |
+| `scripts/check.sh` | Explicit local quality entry with failure propagation and separately selected test execution |
+| `README.md`, `AGENTS.md`, affected project guide references | Actual implemented setup/check commands and the Stage 1 capability limit, without private configuration or source identity |
+
+Do not introduce database/storage infrastructure, history traversal, the HTTP model adapter, real-provider fixtures, report rendering/replacement, a server, background work, GitHub Actions or another execution service. They are outside this stage. Add only interfaces and types used by the Stage 1 command or its checks; no empty future subsystem or simulated successful collection.
+
+#### Acceptance criteria
+
+| ID | Required outcome and distinguishing evidence |
+|---|---|
+| S1-01 | Setup selects the declared Python baseline and produces a consistent lock. Package imports, selected library imports, entry-point help and a built wheel work in an isolated local check. Declared versions alone do not pass compatibility. Prove the owner's macOS target; name Linux checks not performed rather than claiming cross-platform verification. |
+| S1-02 | Help exits 0 without reading configuration or credentials or making a network request. Unknown arguments, missing/invalid configuration and a missing runtime AI opt-in exit 2. A fully synthetic valid invocation reaches an explicit unimplemented-collection diagnostic and exits 5 before credential-carrier loading, client construction or output replacement; it never reports a completed run. |
+| S1-03 | Validation distinguishes missing, valid, invalid and boundary settings under this plan: one public username, positive finite budgets, page/count relationships, admitted endpoint/model and safe output/attempt-state paths. Absolute-path containment checks resolve parent symlinks, reject an unsafe or symlink destination and preserve unrelated files. Pure validation does not establish account/source access. |
+| S1-04 | A synthetic secret marker is absent from settings representations, validation errors, captured command output and traceback diagnostics. Imports/help/collection do not load `.env`, production Telegram/source configuration, another application's environment or a real secret carrier. No real credential value is needed to verify this boundary. |
+| S1-05 | Identity distinguishes equal versus different `(source_id, message_id)` pairs. Used count/outcome types reject invalid states and preserve the nonoverlapping categories from this plan. Strict response validation matches classification.schema.json, including extra/missing fields, types/enums, blank/overlong reasons, duplicate JSON keys, nonfinite literals and trailing content. These are local shape checks, not model-quality tests. |
+| S1-06 | A default-on test boundary blocks attempted socket/DNS/HTTP and command-based external requests before any request process/send occurs, including import/collection and test-owned subprocess canaries. It strips inherited credential inputs and disables implicit environment-file discovery early enough for collection. Positive controls preserve ordinary local subprocesses, file I/O and asyncio/socket-pair operation. |
+| S1-07 | Register `ai` and `--run-ai` without enabling networking or credential discovery for unmarked tests. Selecting the flag alone leaves imports/collection and ordinary tests isolated. The actual provider fixture and semantic group belong to Stage 2. Requesting full mode before an eligible model group/admission fixture exists returns an explicit nonzero preflight failure without loading credentials. An empty model group cannot establish a passed full evaluation. No real request is needed or permitted for Stage 1 checks. |
+| S1-08 | The quality entry runs Ruff formatting check/lint, mypy and the declared package build, and fails on a missing required tool or failed check. Python style uses a 79-character line limit and single-quote formatting; type exceptions need inspected evidence and narrow scope. Tests are an explicit runner mode following the maintainer's conversation choice. When the required Stage 1 tests are selected, zero collected tests is failure, not a successful scaffold exception. |
+| S1-09 | README and project instructions name only commands actually implemented and checked, show the absence of a collector/provider runtime, and preserve the no-AI/full-run approval policy. Report exact Python/tool versions, commands, exit codes, test counts and unperformed platform/runtime checks on the result revision. |
+
+The implemented runner default performs static/build checks only. An explicit `--tests` mode adds the default no-AI suite after the maintainer selects that mode in conversation. Future real-model mode remains governed by tasks.md and `--run-ai`; it is not enabled by this stage. Missing SDK typing is not an automatic global mypy exception: inspect built-in and separately supplied typing for the selected release before a scoped override.
+
+#### Verification and delivery boundary
+
+README owns the implemented project-local bootstrap and locked setup commands. `scripts/check.sh` qualifies static checks and actual wheel/sdist contents with offline build/rebuild and installed-wheel import. Explicit `--tests` additionally checks the working tree and extracted source. Dependency setup may download declared packages; it does not approve inference, Telegram access, a global tool upgrade or credential operations.
+
+For isolation guards, retain the original blocked attempt and a contrasting local-operation control. Show that removing the relevant guard makes its intended canary fail; a globally broken event loop or an always-failing test is not evidence of correct isolation. All such tests are synthetic and require the maintainer's chosen test mode before execution.
+
+The current local lead implements this coherent offline boundary directly, without another agent or cloud execution. Return a scoped PR and current-head evidence under the project's commit/publication gates, with merge separately approved. D3/D4 and the individual semantic label review do not block offline setup preparation; they still block their dependent live/model evaluation work.
+
+Exit: evidence for S1-01 through S1-09 on the actual implementation revision, covering the offline parts of LC-01/LC-09/LC-10 and response shape. This does not accept collector behavior, semantic quality, source coverage or a complete Milestone 1 result.
 
 <!-- === Stage 2: Classification contract and local report === -->
 ### Stage 2: Classification contract and local report
 
 Dependency: Stage 1's accepted interfaces.
 
-1. Implement the accepted AI contract, typed disposition model and candidate provider adapter from ai-classification.md. The earlier rule interpretation is not an implementation instruction.
+1. Reuse Stage 1's local response types, then implement the accepted AI transport/orchestration contract, final disposition and candidate provider adapter from ai-classification.md. The earlier rule interpretation is not an implementation instruction.
 2. Add all agreed English and Russian examples as synthetic evaluation data, including contrast pairs and unsupported text.
 3. Implement report rendering, exclusive output ownership, unfinished marker and atomic terminal replacement.
-4. Verify local handling with substituted replies, reconciliation, HTML/link safety, duplicates and replacement failures. Implement separately marked real-model semantic cases and the isolation gates before requesting a real-model run.
+4. Verify local handling with substituted replies, reconciliation, HTML/link safety, duplicates and replacement failures. Extend Stage 1's isolation with explicitly admitted provider fixtures and separately marked semantic cases before requesting a real-model run.
 
 Exit: local handling aspects of LC-02 through LC-07 and report aspects of LC-08/LC-10 have no-AI evidence. Actual model classification quality remains unverified until the separately approved semantic group runs and is assessed. Expected labels are independent of implementation and subject to review; no Telegram-source accuracy is claimed.
 
@@ -180,7 +217,7 @@ Exit: a supported usefulness decision or exact remaining limitations. A vacancy-
 
 ## Evidence behind the proposal
 
-On 2026-11-10, [PyPI Telethon 1.45.0](https://pypi.org/project/Telethon/1.45.0/) and the [Python 3.14.10 release](https://www.python.org/downloads/release/python-31410/) identify the proposed versions. [uv locking documentation](https://docs.astral.sh/uv/concepts/projects/sync/) supports explicit locked setup/run commands. The project has no installed Telethon environment; the local observation is Python 3.14.6 and uv 0.9.3, not a completed compatibility test.
+On 2026-11-10, [PyPI Telethon 1.45.0](https://pypi.org/project/Telethon/1.45.0/) and the [Python 3.14.10 release](https://www.python.org/downloads/release/python-31410/) identify the proposed versions. [uv locking documentation](https://docs.astral.sh/uv/concepts/projects/sync/) supports explicit locked setup/run commands. The earlier preparation environment used Python 3.14.6 and uv 0.9.3. Stage 1 installs the selected Python 3.14.10 and project-local uv 0.13.7, with local selected-library import checks. This qualifies the offline foundation on macOS, not provider access, Linux execution or Telegram history.
 
 The inspected [Telethon wheel](https://files.pythonhosted.org/packages/92/ac/241c09e6905215f225d8088438ceb1f32cc4b4865f3f49068cb402debfd7/telethon-1.45.0-py3-none-any.whl) has SHA-256 `339e24c83aedc9f12cbe389264627edc49779e4289c535aa90aafc4ce62f7972`, verified against PyPI metadata. Selected symbols are `telethon/client/messages.py::_MessagesIter._load_next_chunk/_message_in_range`, `telethon/client/users.py::_call`, `telethon/helpers.py::retry_range` and `telethon/requestiter.py::RequestIter`. This is selected source inspection, not a review of the entire dependency.
 
@@ -190,6 +227,6 @@ Primary contracts: [messages.getHistory](https://core.telegram.org/method/messag
 
 ## Readiness and review boundary
 
-The D5 technical basis is accepted. The AI contract specifies its chosen first evaluation candidate, prompt/schema, failure handling and planned limits. Account/operation access, dependency compatibility and real quality remain unverified. Individual evaluation labels and detailed criteria retain their review requirements. Implementation needs its assignment; model tests need a concrete approved run, and Telegram/model-content work additionally needs D3/D4.
+The D5 technical basis is accepted and the assigned offline foundation is implemented locally. Local verification covers imports, preflight, pure response shape and test/build boundaries on macOS. It does not establish model access/quality, semantic label acceptance, Linux execution or Telegram coverage. Stage 2 and later implementation need their own assignments; real-model tests and source/content work keep their concrete run and D3/D4 gates.
 
-Document coherence and requirement mapping are author checks, not runtime evidence or independent review. Next, prepare the bounded implementation assignment and its applicable acceptance criteria. Commit and publication require approval of the exact changed package.
+Local checks and focused guard probes are author verification, not independent review or full feature acceptance. Review the Stage 1 result before continuing to Stage 2. Commit and publication require approval of the exact changed package.
