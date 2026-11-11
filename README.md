@@ -4,7 +4,7 @@ Find development projects and job vacancies in Telegram without reading every fe
 
 BriefOtter is a personal monitoring tool being designed for people who follow multiple Telegram channels and chats for development work. The goal is a local list of relevant project requests and job vacancies, shown separately with original message links and reasons for selection.
 
-**Status:** Design stage. A runnable version is not available yet.
+**Status:** An offline foundation is implemented: package setup, command/configuration preflight, local response validation and isolated tests. Message collection, semantic model evaluation and HTML reporting are not implemented yet.
 
 See the [product roadmap](docs/ROADMAP.md) for the planned milestones and first vertical slice.
 
@@ -20,7 +20,39 @@ Unclear messages remain marked as uncertain. The first version keeps read-only c
 
 ## Planned verification
 
-The [test execution policy](docs/specs/001-local-candidates/tasks.md#accepted-test-execution-policy) separates tests without AI requests from tests using a real model. The maintainer selects the scope before a run. Model tests use agreed synthetic examples and a separately approved request/spending limit; local tests substitute provider replies and block external calls. There are no implemented test commands yet. Passing local tests does not demonstrate model classification quality.
+The [test execution policy](docs/specs/001-local-candidates/tasks.md#accepted-test-execution-policy) separates tests without AI requests from tests using a real model. The maintainer selects the scope before a run. The implemented tests are synthetic and block external requests and inherited credentials. Real-model cases are not implemented; requesting `--run-ai` fails preflight explicitly. Passing local response validation does not demonstrate model classification quality.
+
+## Local setup
+
+The project pins Python 3.14.10 and its dependencies in `.python-version`, `pyproject.toml` and `uv.lock`. The setup below needs an existing uv launcher, a bootstrap `python3` and package/download access. It installs the selected uv inside the project environment and does not replace the global launcher.
+
+```bash
+uv tool run --python python3 --from uv==0.13.7 uv python install 3.14.10
+uv tool run --python python3 --from uv==0.13.7 uv sync --locked
+source .venv/bin/activate
+uv run --locked brief-otter --help
+```
+
+The offline foundation is verified on macOS. Linux remains an intended target with no executed platform check; Windows support is outside this first slice.
+
+## Local checks
+
+```bash
+./scripts/check.sh
+./scripts/check.sh --tests
+```
+
+The first command performs formatting/lint, type checks, an offline build, complete wheel/sdist inspection, installed-wheel import and source rebuild. It runs no pytest suite. The explicit `--tests` mode additionally runs the synthetic suite in the working tree and extracted source archive after the maintainer selects that mode. A missing required tool, failed check or empty required test collection makes the runner fail.
+
+Build targets use explicit file lists in `pyproject.toml`. Add intended product/test inputs to those lists when changing the package; the verifier refuses unselected Python source rather than silently dropping it. Unlisted runtime data is kept out of both distribution formats, and required source/test/document bytes are compared against each actual archive.
+
+For a focused run after the same run-mode decision, use `uv run --locked pytest tests/`. `--run-ai` returns an explicit unmet preflight until a later stage implements and separately admits real-model cases. No interactive approval prompt is embedded in pytest.
+
+## Command capability
+
+`brief-otter --help` and `brief-otter collect --help` exit 0 without loading private configuration or credentials. Invalid arguments/configuration or a missing runtime `--allow-ai` opt-in exit 2. With valid synthetic settings, `collect` exits 5 with `collection_not_implemented` before reading credential carriers, constructing a client or replacing any report. The runtime opt-in is distinct from pytest's model-test option and grants no access or spending permission.
+
+Configuration is explicit TOML, validated from a private owner-only location outside the project boundary. Output and attempt-state destinations must have owner-only parents, remain outside that boundary and be distinct; validation resolves parent symlinks and rejects symlink destinations. Run configuration preflight from the project checkout or extracted source tree so its `pyproject.toml` boundary can be established. No `.env` discovery or login flow is implemented. Use synthetic settings for current development; account/session and real-source work retain their separate decisions.
 
 ## Example of the intended selection
 

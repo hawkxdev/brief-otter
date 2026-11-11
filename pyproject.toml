@@ -1,0 +1,120 @@
+[build-system]
+requires = ['hatchling==1.33.0']
+build-backend = 'hatchling.build'
+
+[project]
+name = 'brief-otter'
+version = '0.1.0'
+description = 'Offline foundation for local Telegram opportunity review'
+readme = 'README.md'
+requires-python = '>=3.14.10,<3.15'
+license = 'MIT'
+dependencies = [
+    'httpx==0.28.1',
+    'pydantic==2.14.3',
+    'telethon==1.45.0',
+]
+
+[project.scripts]
+brief-otter = 'brief_otter.cli:main'
+
+[dependency-groups]
+dev = [
+    'hatchling==1.33.0',
+    'mypy==2.4.1',
+    'pytest==9.2.0',
+    'pytest-asyncio==1.4.1.post1',
+    'ruff==0.17.4',
+    'uv==0.13.7',
+]
+
+[tool.hatch.build]
+dev-mode-dirs = ['src']
+
+[tool.hatch.build.targets.wheel]
+sources = ['src']
+only-include = [
+    'src/brief_otter/__init__.py',
+    'src/brief_otter/__main__.py',
+    'src/brief_otter/classification.py',
+    'src/brief_otter/cli.py',
+    'src/brief_otter/config.py',
+    'src/brief_otter/domain.py',
+]
+
+[tool.hatch.build.targets.sdist]
+only-include = [
+    '.agents/skills/project-guide/SKILL.md',
+    '.agents/skills/project-guide/references/kb-index.md',
+    '.gitignore',
+    '.python-version',
+    'AGENTS.md',
+    'CONTRIBUTING.md',
+    'LICENSE',
+    'README.md',
+    'SECURITY.md',
+    'docs/ROADMAP.md',
+    'docs/adr/0001-local-collection-technical-basis.md',
+    'docs/specs/001-local-candidates/ai-classification.md',
+    'docs/specs/001-local-candidates/classification.schema.json',
+    'docs/specs/001-local-candidates/classifier-prompt.md',
+    'docs/specs/001-local-candidates/plan.md',
+    'docs/specs/001-local-candidates/rules.md',
+    'docs/specs/001-local-candidates/spec.md',
+    'docs/specs/001-local-candidates/tasks.md',
+    'pyproject.toml',
+    'scripts/check.sh',
+    'scripts/verify_distribution.py',
+    'src/brief_otter/__init__.py',
+    'src/brief_otter/__main__.py',
+    'src/brief_otter/classification.py',
+    'src/brief_otter/cli.py',
+    'src/brief_otter/config.py',
+    'src/brief_otter/domain.py',
+    'tests/__init__.py',
+    'tests/conftest.py',
+    'tests/helpers.py',
+    'tests/offline_bootstrap/sitecustomize.py',
+    'tests/offline_support.py',
+    'tests/test_classification.py',
+    'tests/test_cli.py',
+    'tests/test_config.py',
+    'tests/test_domain.py',
+    'tests/test_isolation.py',
+    'tests/test_packaging.py',
+    'uv.lock',
+]
+
+[tool.ruff]
+line-length = 79
+target-version = 'py314'
+
+[tool.ruff.lint]
+select = ['E', 'F', 'I', 'UP', 'B', 'SIM']
+
+[tool.ruff.format]
+quote-style = 'single'
+docstring-code-format = true
+
+[tool.mypy]
+python_version = '3.14'
+files = ['src', 'tests', 'scripts']
+warn_return_any = true
+warn_unused_configs = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+show_error_codes = true
+no_implicit_optional = true
+check_untyped_defs = true
+disallow_untyped_defs = true
+
+[tool.pyright]
+typeCheckingMode = 'basic'
+
+[tool.pytest.ini_options]
+testpaths = ['tests']
+addopts = ['-ra', '--strict-markers', '--strict-config']
+asyncio_mode = 'auto'
+asyncio_default_fixture_loop_scope = 'function'
+filterwarnings = ['error']
+markers = ['ai: requires a separately admitted real model request']

@@ -10,7 +10,7 @@ Requirements and acceptance criteria belong to the agreed feature package. Link 
 
 ## Implementation and verification
 
-Python and Telethon are selected. Runtime versions, dependency tooling and database choice must follow the first approved implementation specification rather than assumptions from another project. There is no application setup, test or build command at the current stage.
+The offline foundation uses the versions pinned in `.python-version`, `pyproject.toml` and `uv.lock`. Follow README's project-local setup. `scripts/check.sh` runs static/build/distribution qualification; explicit `--tests` adds the synthetic suite in the working tree and extracted source. Collection, provider requests and report rendering remain unimplemented. Do not turn successful preflight or shape checks into claims about those capabilities.
 
 Run applicable checks locally. Do not add, enable or trigger GitHub Actions as part of routine work. For documentation edits, check links and factual claims, inspect new files as well as tracked changes, and run `git diff --check`. Define and execute focused behavior checks with the first implementation.
 
